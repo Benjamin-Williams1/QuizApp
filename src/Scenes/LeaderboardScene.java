@@ -54,6 +54,7 @@ public class LeaderboardScene {
             @Override
             public void handle(ActionEvent event) {
                 stage.setScene(LeaderboardScene);
+
             }
         });
         MenuItem LeaderboardItem_Typing_LeaderboardVersion = new MenuItem("Typing");
@@ -83,6 +84,9 @@ public class LeaderboardScene {
 
         ObservableList<Integer> MathsScores = FXCollections.observableArrayList(ScoresService.getMathScores(x));
         ListView LeaderboardTable = new ListView(MathsScores);
+        LeaderboardTable.setMinSize(100,100);
+        LeaderboardTable.setMaxSize(300,300);
+        LeaderboardTable.setVisible(false);
         LeaderboardVBOX.getChildren().add(LeaderboardTable);
 
         return LeaderboardScene;

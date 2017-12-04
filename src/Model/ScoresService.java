@@ -91,15 +91,10 @@ public class ScoresService {
         ObservableList<Integer> result = FXCollections.observableArrayList();
 
         PreparedStatement statement = database.newStatement("SELECT Score FROM Scores WHERE Activity = 'Maths'");
-
+        ResultSet results = database.executeQuery(statement);
         try {
-            if (statement != null) {
-                ResultSet results = database.executeQuery(statement);
-                if (results != null) {
-                    while() {
-                        result.add(results.getInt("Score"));
-                    }
-                }
+            while(results.next()) {
+                result.add(results.getInt("Score"));
             }
         } catch (SQLException resultsException) {
             System.out.println("Database select by id error: " + resultsException.getMessage());
