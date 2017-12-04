@@ -16,6 +16,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionListener;
+
 public class LeaderboardScene {
 
     public static Scene LeaderboardMaker(Stage stage){
@@ -53,8 +55,8 @@ public class LeaderboardScene {
         LeaderboardItem_Maths_LeaderboardVersion.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                LeaderboardItem_Maths_LeaderboardVersion.setVisible(false);
                 stage.setScene(LeaderboardScene);
-
             }
         });
         MenuItem LeaderboardItem_Typing_LeaderboardVersion = new MenuItem("Typing");
@@ -83,10 +85,13 @@ public class LeaderboardScene {
         LeaderboardVBOX.getChildren().add(LeaderboardTitle);
 
         ObservableList<Integer> MathsScores = FXCollections.observableArrayList(ScoresService.getMathScores(x));
-        ListView LeaderboardTable = new ListView(MathsScores);
+        ListView LeaderboardTable = new ListView(MathsScores.sorted());
         LeaderboardTable.setMinSize(100,100);
         LeaderboardTable.setMaxSize(300,300);
         LeaderboardTable.setVisible(false);
+        if(LeaderboardItem_Maths_LeaderboardVersion.isVisible()){
+           LeaderboardTable.setVisible(true);
+        }
         LeaderboardVBOX.getChildren().add(LeaderboardTable);
 
         return LeaderboardScene;
