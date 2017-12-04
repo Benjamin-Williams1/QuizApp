@@ -96,7 +96,7 @@ public class ScoresService {
             if (statement != null) {
                 ResultSet results = database.executeQuery(statement);
                 if (results != null) {
-                    while(result.size() != ) {
+                    while() {
                         result.add(results.getInt("Score"));
                     }
                 }
