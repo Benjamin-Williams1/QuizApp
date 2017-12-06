@@ -23,6 +23,9 @@ public class LeaderboardScene {
     public static Scene LeaderboardMaker(Stage stage){
 
         DatabaseConnection x = DatabaseConnectionHub.x;
+        ObservableList<Integer> Scores = FXCollections.observableArrayList();
+
+        ListView LeaderboardTable = new ListView(Scores.sorted());
 
         VBox LeaderboardVBOX = new VBox();
         LeaderboardVBOX.setAlignment(Pos.CENTER);
@@ -55,7 +58,14 @@ public class LeaderboardScene {
         LeaderboardItem_Maths_LeaderboardVersion.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LeaderboardItem_Maths_LeaderboardVersion.setVisible(false);
+                //LeaderboardTable.getItems().removeAll();
+
+                ObservableList potential = LeaderboardTable.getSelectionModel().getSelectedItems();
+                LeaderboardTable.getSelectionModel().clearSelection();
+                Scores.remove(potential);
+
+                //Scores.removeAll();
+                Scores.addAll(ScoresService.getScores("Maths", x));
                 stage.setScene(LeaderboardScene);
             }
         });
@@ -63,6 +73,9 @@ public class LeaderboardScene {
         LeaderboardItem_Typing_LeaderboardVersion.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                LeaderboardTable.getItems().removeAll();
+                Scores.removeAll();
+                Scores.addAll(ScoresService.getScores("Typing", x));
                 stage.setScene(LeaderboardScene);
             }
         });
@@ -70,6 +83,9 @@ public class LeaderboardScene {
         LeaderboardItem_History_LeaderboardVersion.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                LeaderboardTable.getItems().removeAll();
+                Scores.removeAll();
+                Scores.addAll(ScoresService.getScores("History", x));
                 stage.setScene(LeaderboardScene);
             }
         });
@@ -84,14 +100,8 @@ public class LeaderboardScene {
         LeaderboardTitle.setPadding(new Insets(0,0,20,0));
         LeaderboardVBOX.getChildren().add(LeaderboardTitle);
 
-        ObservableList<Integer> MathsScores = FXCollections.observableArrayList(ScoresService.getMathScores(x));
-        ListView LeaderboardTable = new ListView(MathsScores.sorted());
         LeaderboardTable.setMinSize(100,100);
         LeaderboardTable.setMaxSize(300,300);
-        LeaderboardTable.setVisible(false);
-        if(LeaderboardItem_Maths_LeaderboardVersion.isVisible()){
-           LeaderboardTable.setVisible(true);
-        }
         LeaderboardVBOX.getChildren().add(LeaderboardTable);
 
         return LeaderboardScene;

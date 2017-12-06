@@ -87,12 +87,13 @@ public class ScoresService {
         }
 
     }
-    public static ObservableList<Integer> getMathScores(Model.DatabaseConnection database){
+    public static ObservableList<Integer> getScores(String Activity, Model.DatabaseConnection database){
         ObservableList<Integer> result = FXCollections.observableArrayList();
 
-        PreparedStatement statement = database.newStatement("SELECT Score FROM Scores WHERE Activity = 'Maths'");
-        ResultSet results = database.executeQuery(statement);
+        PreparedStatement statement = database.newStatement("SELECT Score FROM Scores WHERE Activity = ?");
         try {
+            statement.setString(1, Activity);
+            ResultSet results = database.executeQuery(statement);
             while(results.next()) {
                 result.add(results.getInt("Score"));
             }
