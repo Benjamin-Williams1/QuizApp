@@ -1,5 +1,7 @@
 package Scenes;
 
+import Model.DatabaseConnection;
+import Model.ScoresService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -14,6 +16,8 @@ import javafx.stage.Stage;
 public class MainMenuScene{
 
     public static Scene MainMenuMaker(Stage stage){
+
+        DatabaseConnection x = DatabaseConnectionHub.x;
 
         VBox MainMenuVBOX = new VBox();
         MainMenuVBOX.setAlignment(Pos.TOP_LEFT);
@@ -46,6 +50,9 @@ public class MainMenuScene{
         LeaderboardItem_Maths.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                LeaderboardScene.Scores.remove(0, LeaderboardScene.Scores.size()-1);
+                LeaderboardScene.Scores.addAll(ScoresService.getScores("Maths", x));
+                LeaderboardScene.LeaderboardTable.setItems(LeaderboardScene.Scores);
                 stage.setScene(LeaderboardScene.LeaderboardMaker(stage));
             }
         });
@@ -53,6 +60,9 @@ public class MainMenuScene{
         LeaderboardItem_Typing.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                LeaderboardScene.Scores.remove(0, LeaderboardScene.Scores.size()-1);
+                LeaderboardScene.Scores.addAll(ScoresService.getScores("Typing", x));
+                LeaderboardScene.LeaderboardTable.setItems(LeaderboardScene.Scores);
                 stage.setScene(LeaderboardScene.LeaderboardMaker(stage));
             }
         });
@@ -60,6 +70,9 @@ public class MainMenuScene{
         LeaderboardItem_History.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                LeaderboardScene.Scores.remove(0, LeaderboardScene.Scores.size()-1);
+                LeaderboardScene.Scores.addAll(ScoresService.getScores("History", x));
+                LeaderboardScene.LeaderboardTable.setItems(LeaderboardScene.Scores);
                 stage.setScene(LeaderboardScene.LeaderboardMaker(stage));
             }
         });

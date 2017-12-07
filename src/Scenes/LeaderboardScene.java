@@ -2,7 +2,6 @@ package Scenes;
 
 import Model.DatabaseConnection;
 import Model.ScoresService;
-import Model.StudentsService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,16 +15,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionListener;
-
 public class LeaderboardScene {
+
+    public static ObservableList<Integer> Scores = FXCollections.observableArrayList();
+    public static ListView LeaderboardTable = new ListView();
 
     public static Scene LeaderboardMaker(Stage stage){
 
         DatabaseConnection x = DatabaseConnectionHub.x;
-        ObservableList<Integer> Scores = FXCollections.observableArrayList();
-
-        ListView LeaderboardTable = new ListView(Scores.sorted());
 
         VBox LeaderboardVBOX = new VBox();
         LeaderboardVBOX.setAlignment(Pos.CENTER);
@@ -58,14 +55,9 @@ public class LeaderboardScene {
         LeaderboardItem_Maths_LeaderboardVersion.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //LeaderboardTable.getItems().removeAll();
-
-                ObservableList potential = LeaderboardTable.getSelectionModel().getSelectedItems();
-                LeaderboardTable.getSelectionModel().clearSelection();
-                Scores.remove(potential);
-
-                //Scores.removeAll();
+                Scores.remove(0, Scores.size()-1);
                 Scores.addAll(ScoresService.getScores("Maths", x));
+                LeaderboardTable.setItems(Scores);
                 stage.setScene(LeaderboardScene);
             }
         });
@@ -73,9 +65,9 @@ public class LeaderboardScene {
         LeaderboardItem_Typing_LeaderboardVersion.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LeaderboardTable.getItems().removeAll();
-                Scores.removeAll();
+                Scores.remove(0, Scores.size()-1);
                 Scores.addAll(ScoresService.getScores("Typing", x));
+                LeaderboardTable.setItems(Scores);
                 stage.setScene(LeaderboardScene);
             }
         });
@@ -83,9 +75,9 @@ public class LeaderboardScene {
         LeaderboardItem_History_LeaderboardVersion.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LeaderboardTable.getItems().removeAll();
-                Scores.removeAll();
+                Scores.remove(0, Scores.size()-1);
                 Scores.addAll(ScoresService.getScores("History", x));
+                LeaderboardTable.setItems(Scores);
                 stage.setScene(LeaderboardScene);
             }
         });
