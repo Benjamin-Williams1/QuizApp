@@ -399,6 +399,8 @@ public class Main extends Application {
             LeaderboardTable.setItems(MathsScores);
             LeaderboardVBOX.getChildren().add(LeaderboardTable);*/
 
+
+
         }
 
         public static void main(String[] args) {

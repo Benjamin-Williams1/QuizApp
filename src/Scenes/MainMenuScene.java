@@ -53,6 +53,7 @@ public class MainMenuScene{
                 LeaderboardScene.Scores.remove(0, LeaderboardScene.Scores.size()-1);
                 LeaderboardScene.Scores.addAll(ScoresService.getScores("Maths", x));
                 LeaderboardScene.LeaderboardTable.setItems(LeaderboardScene.Scores.sorted());
+                LeaderboardScene.LeaderboardTableTitleContent = "Maths";
                 stage.setScene(LeaderboardScene.LeaderboardMaker(stage));
             }
         });
@@ -63,6 +64,7 @@ public class MainMenuScene{
                 LeaderboardScene.Scores.remove(0, LeaderboardScene.Scores.size()-1);
                 LeaderboardScene.Scores.addAll(ScoresService.getScores("Typing", x));
                 LeaderboardScene.LeaderboardTable.setItems(LeaderboardScene.Scores.sorted());
+                LeaderboardScene.LeaderboardTableTitleContent = "Typing";
                 stage.setScene(LeaderboardScene.LeaderboardMaker(stage));
             }
         });
@@ -73,6 +75,7 @@ public class MainMenuScene{
                 LeaderboardScene.Scores.remove(0, LeaderboardScene.Scores.size()-1);
                 LeaderboardScene.Scores.addAll(ScoresService.getScores("History", x));
                 LeaderboardScene.LeaderboardTable.setItems(LeaderboardScene.Scores.sorted());
+                LeaderboardScene.LeaderboardTableTitleContent = "History";
                 stage.setScene(LeaderboardScene.LeaderboardMaker(stage));
             }
         });

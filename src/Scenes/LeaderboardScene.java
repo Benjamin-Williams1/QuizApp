@@ -19,6 +19,7 @@ public class LeaderboardScene {
 
     public static ObservableList<Integer> Scores = FXCollections.observableArrayList();
     public static ListView LeaderboardTable = new ListView();
+    public static String LeaderboardTableTitleContent = "Blank";
 
     public static Scene LeaderboardMaker(Stage stage){
 
@@ -58,6 +59,7 @@ public class LeaderboardScene {
                 Scores.remove(0, Scores.size()-1);
                 Scores.addAll(ScoresService.getScores("Maths", x));
                 LeaderboardTable.setItems(Scores.sorted());
+                LeaderboardTableTitleContent = "Maths";
                 stage.setScene(LeaderboardScene);
             }
         });
@@ -68,6 +70,7 @@ public class LeaderboardScene {
                 Scores.remove(0, Scores.size()-1);
                 Scores.addAll(ScoresService.getScores("Typing", x));
                 LeaderboardTable.setItems(Scores.sorted());
+                LeaderboardTableTitleContent = "Typing";
                 stage.setScene(LeaderboardScene);
             }
         });
@@ -78,6 +81,7 @@ public class LeaderboardScene {
                 Scores.remove(0, Scores.size()-1);
                 Scores.addAll(ScoresService.getScores("History", x));
                 LeaderboardTable.setItems(Scores.sorted());
+                LeaderboardTableTitleContent = "History";
                 stage.setScene(LeaderboardScene);
             }
         });
@@ -92,7 +96,7 @@ public class LeaderboardScene {
         LeaderboardTitle.setPadding(new Insets(0,0,20,0));
         LeaderboardVBOX.getChildren().add(LeaderboardTitle);
 
-        Label LeaderboardTableTitle = new Label();
+        Label LeaderboardTableTitle = new Label(LeaderboardTableTitleContent);
         LeaderboardTableTitle.setFont(Font.font("Arial", 20));
         LeaderboardTableTitle.setPadding(new Insets(0,0,15,0));
         LeaderboardVBOX.getChildren().add(LeaderboardTableTitle);
