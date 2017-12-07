@@ -57,7 +57,7 @@ public class LeaderboardScene {
             public void handle(ActionEvent event) {
                 Scores.remove(0, Scores.size()-1);
                 Scores.addAll(ScoresService.getScores("Maths", x));
-                LeaderboardTable.setItems(Scores);
+                LeaderboardTable.setItems(Scores.sorted());
                 stage.setScene(LeaderboardScene);
             }
         });
@@ -67,7 +67,7 @@ public class LeaderboardScene {
             public void handle(ActionEvent event) {
                 Scores.remove(0, Scores.size()-1);
                 Scores.addAll(ScoresService.getScores("Typing", x));
-                LeaderboardTable.setItems(Scores);
+                LeaderboardTable.setItems(Scores.sorted());
                 stage.setScene(LeaderboardScene);
             }
         });
@@ -77,7 +77,7 @@ public class LeaderboardScene {
             public void handle(ActionEvent event) {
                 Scores.remove(0, Scores.size()-1);
                 Scores.addAll(ScoresService.getScores("History", x));
-                LeaderboardTable.setItems(Scores);
+                LeaderboardTable.setItems(Scores.sorted());
                 stage.setScene(LeaderboardScene);
             }
         });
@@ -91,6 +91,11 @@ public class LeaderboardScene {
         LeaderboardTitle.setFont(Font.font("Arial", FontWeight.BOLD, 40));
         LeaderboardTitle.setPadding(new Insets(0,0,20,0));
         LeaderboardVBOX.getChildren().add(LeaderboardTitle);
+
+        Label LeaderboardTableTitle = new Label();
+        LeaderboardTableTitle.setFont(Font.font("Arial", 20));
+        LeaderboardTableTitle.setPadding(new Insets(0,0,15,0));
+        LeaderboardVBOX.getChildren().add(LeaderboardTableTitle);
 
         LeaderboardTable.setMinSize(100,100);
         LeaderboardTable.setMaxSize(300,300);
