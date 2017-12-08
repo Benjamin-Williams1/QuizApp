@@ -87,7 +87,21 @@ public class LeaderboardScene {
         });
         LeaderboardMenu_LeaderboardVersion.getItems().addAll(LeaderboardItem_Maths_LeaderboardVersion, LeaderboardItem_Typing_LeaderboardVersion, LeaderboardItem_History_LeaderboardVersion);
 
-        LeaderboardMenuBar.getMenus().addAll(OptionsMenu_LeaderboardVersion, LeaderboardMenu_LeaderboardVersion);
+        MenuItem InvisbleItemForTest = new MenuItem("If you can see this its bad");
+
+        Menu MainMenu_LeaderboardVersion = new Menu("Main");
+        MainMenu_LeaderboardVersion.showingProperty().addListener((observable, oldValue, newValue) -> {
+            InvisbleItemForTest.fire();
+        });
+        InvisbleItemForTest.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                stage.setScene(MainMenuScene.MainMenuMaker(stage));
+            }
+        });
+        MainMenu_LeaderboardVersion.getItems().addAll(InvisbleItemForTest);
+
+        LeaderboardMenuBar.getMenus().addAll(OptionsMenu_LeaderboardVersion, LeaderboardMenu_LeaderboardVersion, MainMenu_LeaderboardVersion);
         LeaderboardVBOX.getChildren().add(LeaderboardMenuBar);
 
 

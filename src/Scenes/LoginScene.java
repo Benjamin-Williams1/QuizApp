@@ -18,6 +18,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import static sun.rmi.transport.TransportConstants.Return;
+
 public class LoginScene{
 
     public static Scene LoginSceneMaker(Stage stage){
@@ -65,11 +67,19 @@ public class LoginScene{
         Password.setFont(Font.font("Arial", FontWeight.BOLD, 12));
         PasswordHBOX.getChildren().add(Password);
 
+        Button LoginButton = new Button("Login"); //Defined here for use in the passwordfield automatic login
+
         PasswordField pf = new PasswordField();
         pf.setMaxWidth(150);
         pf.setAlignment(Pos.CENTER);
         pf.setPromptText("Enter your password");
         pf.setStyle("-fx-font-style: italic");
+        pf.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                LoginButton.fire();
+            }
+        });
         PasswordHBOX.getChildren().add(pf);
 
         Label WrongPassword = new Label("Wrong Password");
@@ -84,7 +94,6 @@ public class LoginScene{
         LoginButtonHBOX.setPadding(new Insets(20, 0, 20, 0));
         LoginSceneBase.getChildren().add(LoginButtonHBOX);
 
-        Button LoginButton = new Button("Login");
         LoginButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -117,6 +126,12 @@ public class LoginScene{
 
         Button ForgotPassword = new Button("Forgot your password?");
         ForgotPassword.setTextFill(Color.RED);
+        ForgotPassword.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Button Has No Functionality Currently");
+            }
+        });
         LoginSceneBase.getChildren().add(ForgotPassword);
 
         return  LoginScene;
