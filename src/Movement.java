@@ -1,5 +1,4 @@
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-import javafx.animation.Animation;
+
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -9,43 +8,19 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
-import javafx.stage.Stage;
-
-import static javafx.application.Application.launch;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Movement extends Application{
 
-    Random rand = new Random();
+    private int vx = 8;
+    private int vy = 0;
 
-    int vx = 8;
-    int vy = 0;
-
-    int x2 = 0;
-    int y2 = 0;
-
-    boolean cleared = false;
-    boolean ONLYONCEPLEASE = false;
-    boolean eaten = false;
-    boolean randomed = false;
-    boolean yummy = false;
-
-    int EatenNumber = 0;
+    private boolean ONLYONCEPLEASE = false;
+    private boolean eaten = false;
+    private boolean cleared = false;
 
     public static void main(String args[]){
         launch(args);
@@ -65,6 +40,9 @@ public class Movement extends Application{
         ArrayList<Player> P = new ArrayList<>();
         P.add(new Player());
 
+        ArrayList<NumberToBeEaten> EatMe = new ArrayList<>();
+        EatMe.add(new NumberToBeEaten());
+
         AnimationTimer renderingTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -77,6 +55,10 @@ public class Movement extends Application{
 
                 for(int i = 0; i < P.size(); i++) {
                     P.get(i).drawToScreen(gc);
+                }
+
+                for(int i = 0; i < EatMe.size(); i++) {
+                    EatMe.get(i).numberEntityMaker(gc);
                 }
 
                 P.get(0).x += vx;
@@ -110,73 +92,46 @@ public class Movement extends Application{
                     }
                 });
 
-
-                if(randomed == false) {
-                    x2 = rand.nextInt(900) + 50;
-                    y2 = rand.nextInt(800) + 50;
-                    randomed = true;
-                }
-
                 P.get(0).loopScreen();
 
-
-                if(cleared == false){
-                    gc.setFill(Color.RED);
-                    gc.fillRect(x2, y2, 20, 20);
-                    System.out.println("This maybe worked");
-                }
-
-                if((P.get(0).x >= x2 - 40 && P.get(0).x <= x2 + 40) && (P.get(0).y >= y2 - 40 && P.get(0).y <= y2 + 40)){
-                    System.out.println("This works");
+                if((P.get(0).x >= EatMe.get(0).x2 - 20 && P.get(0).x <= EatMe.get(0).x2 + 20) && (P.get(0).y >= EatMe.get(0).y2 - 20 && P.get(0).y <= EatMe.get(0).y2 + 20)){
                     cleared = true;
                     ONLYONCEPLEASE = true;
                     for(int ii = 0; ii < 2; ii++) {
                         P.add(new Player());
+                    }
+
+                    EatMe.removeAll(EatMe);
+
+                    for(int ii = 0; ii < 4; ii++) {
+                        EatMe.add(new NumberToBeEaten());
                     }
                 }
 
                 for(Player p1 : P)
                     if(p1 != P.get(0)) {
                     {
-                    if ((Math.abs(P.get(0).x-p1.x)<=7) && (Math.abs(P.get(0).y-p1.y)<=7)){
-                        System.out.println("You Lose");
-                        System.exit(0);
+                        if ((Math.abs(P.get(0).x-p1.x)<=7) && (Math.abs(P.get(0).y-p1.y)<=7)){
+                            System.out.println("You Lose");
+                            System.exit(0);
+                        }
                     }
                 }
-                }
 
-                System.out.println(P.size());
-
-                if(cleared == true && ONLYONCEPLEASE == true){
-                    gc.clearRect(x2, y2, 40,40);
+                if(cleared && ONLYONCEPLEASE){
+                    for(int e = 0; e < 4; e++) {
+                        gc.clearRect(EatMe.get(0).x2, EatMe.get(0).y2, 20, 20);
+                        EatMe.get(0).randomed = false;
+                    }
                     gc.setFill(Color.GREEN);
                     eaten = true;
-                    EatenNumber ++;
                 }
 
-                if(eaten == true && cleared == true){
-                    yummy = true;
+                if(eaten && cleared){
                     cleared = false;
                     ONLYONCEPLEASE = false;
-                    randomed = false;
-                    System.out.println("WHY ARE YOU FIRING");
+                    EatMe.get(0).randomed = false;
                 }
-
-                /*for(int i = 0; i <= EatenNumber; i++) {
-                    if (yummy == true) {
-                        gc.setFill(Color.GREEN);
-                        gc.fillRect(x + (EatenNumber * 25), y, 20, 20);
-                    }
-                }*/
-
-
-                /*scene.addEventHandler(KeyEvent.KEY_RELEASED, (key) -> {
-                    if(key.getCode() == KeyCode.W || key.getCode() == KeyCode.S){
-                        vy = 0;
-                    }else if(key.getCode() == KeyCode.A || key.getCode() == KeyCode.D){
-                        vx = 0;
-                    }
-                });*/
             }
         };renderingTimer.start();
     }
